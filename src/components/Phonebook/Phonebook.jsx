@@ -5,6 +5,9 @@ import { useSelector } from 'react-redux';
 
 export const Phonebook = () => {
 	const contactsLists = useSelector(state => state.contacts.contactsList);
+	const filteredValue = useSelector(state => state.filter);
+
+	const filteredContacts = contactsLists.filter(({name}) => name.toLowerCase().includes(filteredValue.toLowerCase()));
 
 	return (
 		<>
@@ -15,8 +18,8 @@ export const Phonebook = () => {
 				&&
 				<>
 					<h2>Contacts</h2>
-					{/* <Filter value={filtered} handlerFilter={handlerFilter} /> */}
-					<ContactList />
+					<Filter />
+					<ContactList filteredContacts={filteredContacts} />
 				</>
 			}
 		</>
