@@ -2,12 +2,13 @@ import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Filter } from 'components/Filter/Filter';
 import { ContactList } from 'components/ContactList/ContactList';
 import { useSelector } from 'react-redux';
+import { getFilteredContacts } from 'services/getFilteredContactsByName';
 
 export const Phonebook = () => {
 	const contactsLists = useSelector(state => state.contacts.contactsList);
 	const filteredValue = useSelector(state => state.filter);
 
-	const filteredContacts = contactsLists.filter(({name}) => name.toLowerCase().includes(filteredValue.toLowerCase()));
+	const filteredContacts = getFilteredContacts(filteredValue, contactsLists);
 
 	return (
 		<>

@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { notificationAlready } from "services/notificationAlready";
+import { isRepeatName } from "services/isRepeatName";
+import { getFindIndex } from "services/getFindIndex";
 
 export const contactsReducer = createSlice({
 	name: "contacts",
@@ -6,12 +9,14 @@ export const contactsReducer = createSlice({
 		contactsList: [],
 	},
 	reducers: {
-		addContact(state, action) {
-			state.contactsList.push(action.payload);
+		addContact({ contactsList }, { payload }) {
+			const repeatName = isRepeatName(payload.name, contactsList);
+			if (repeatName) return notificationAlready(payload.name);
+			contactsList.push(payload);
 		},
-		removeContact(state, action) {
-			const index = state.contactsList.findIndex(task => task.id === action.payload);
-			state.contactsList.splice(index, 1);
+		removeContact({ contactsList }, { payload }) {
+			const removedIndex = getFindIndex(payload, contactsList);
+			contactsList.splice(removedIndex, 1);
 		},
 	}
 });
