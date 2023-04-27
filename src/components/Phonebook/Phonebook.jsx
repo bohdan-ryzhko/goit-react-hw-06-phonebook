@@ -15,7 +15,7 @@ export const Phonebook = () => {
 			<h1>Phonebook</h1>
 			<ContactForm />
 			{
-				filteredContacts.length > 0
+				contactsLists.length > 0
 				&&
 				<>
 					<h2>Contacts</h2>
